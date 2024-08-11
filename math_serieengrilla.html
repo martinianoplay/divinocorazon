@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con Bootstrap y JavaScript</title>
+    <!-- Vincular Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+        table {
+            margin-top: 20px;
+        }
+        input {
+            width: 100%;
+            border: none;
+            text-align: center;
+        }
+
+
+        body {
+            background-color: #f0f8ff;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        p, .form-control, .btn {
+            font-size: 1.2rem;
+        }
+        .form-control {
+            text-align: center;
+        }
+        #checkValuesButton {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        #checkValuesButton:hover {
+            background-color: #218838;
+        }
+        #result {
+            font-weight: bold;
+        }
+        /* Estilo del GIF */
+        .teacher-gif {
+            width: 150px; /* Ajusta el tamaño del GIF */
+            display: block;
+            margin: 0 auto;
+        }
+        .bold-text {
+            font-weight: bold; /* Estilo para negrita */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+
+        <div class="row align-items-center">
+            <!-- Columna para el título y el párrafo -->
+            <div class="col-md-8">
+                <!-- Título -->
+                <h2 class="text-center">Tiempo de Cosecha</h2>
+                <p class="text-center"><span class="bold-text" id="userName"></span>, te animas a completar este desafío?</p>
+                <!-- Párrafo explicativo -->
+                <p class="text-center mt-3">José está empaquetando cajas de manzanas de a 100 manzanas por caja.</p>
+            </div>
+            <!-- Columna para la imagen -->
+            <div class="col-md-4 text-center">
+                <img src="resources/teacher.png" alt="Maestra Animada" class="teacher-gif">
+             </div>
+        </div>
+
+        <!-- Tabla -->
+        <table class="table table-bordered mt-3">
+            <thead>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Las filas se agregarán aquí mediante JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="text-center mt-3">
+            <button id="checkValuesButton" class="btn btn-lg text-white">Chequear</button>
+            <p id="result" class="mt-4 fs-4"></p>
+        </div>
+    </div>
+
+    <!-- Vincular Bootstrap JS y Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Vincular JavaScript propio -->
+    <script>
+        
+        const resultElement = document.getElementById('result');
+
+        function fillTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Limpiar cualquier contenido previo
+
+            let number = 1000; // Inicializar el número en 1000
+
+            for (let i = 1; i <= 3; i++) {
+                let row = '<tr>';
+                for (let j = 1; j <= 6; j++) {
+                    if ((j === 1) && (i===1)) {
+                        // Completar los primeros dos casilleros
+                        row += `<td><input type="text" class="form-control" value=${number}></td>`;
+                        number += 900; // Incrementar el número en 100
+                    } 
+                    else if ((i===2) && (j===4)) {
+                        // Completar los primeros dos casilleros
+                        row += `<td><input type="text" class="form-control" value=${number}></td>`;
+                    } 
+                    else {
+                        // Dejar el resto de los casilleros en blanco para que el usuario los complete
+                        row += `<td><input type="text" class="form-control"></td>`;
+                    }
+                }
+                row += '</tr>';
+                tableBody.innerHTML += row;
+            }
+        }
+
+        // Función para chequear los valores ingresados por el usuario
+        function checkValues() {
+            const inputs = document.querySelectorAll('input[type="text"]');
+            let correctNumber = 1000; // El siguiente número correcto después de los valores preestablecidos
+            let allCorrect = true;
+
+            inputs.forEach((input) => {
+                if (parseInt(input.value) === correctNumber) {
+                    input.classList.add('is-valid');
+                    input.classList.remove('is-invalid');
+                } else {
+                    input.classList.add('is-invalid');
+                    input.classList.remove('is-valid');
+                    allCorrect = false;
+                }
+                correctNumber += 100;
+            });
+
+            if (allCorrect) {
+                resultElement.textContent = `¡Excelente! ${name}. Nos vemos en clases.`;
+                resultElement.classList.add('text-success');
+                resultElement.classList.remove('text-danger');
+            } else {
+                resultElement.textContent = `Chequea cual corregir.`;
+                resultElement.classList.add('text-danger');
+                resultElement.classList.remove('text-success');
+            }
+        }
+
+        // Llenar la tabla automáticamente al cargar la página
+        window.onload = fillTable;
+
+        // Asignar la función de chequear valores al botón
+        document.getElementById('checkValuesButton').addEventListener('click', checkValues);
+    </script>
+
+</body>
+</html>
