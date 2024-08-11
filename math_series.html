@@ -72,6 +72,10 @@
             <button id="checkAllButton" class="btn btn-lg text-white">Chequear</button>
             <p id="result" class="mt-4 fs-4"></p>
         </div>
+
+        <div class="text-center mt-4">
+            <button id="siguiente" class="btn btn-primary">Siguiente</button>
+        </div>
     </div>
 
     <!-- Vincular Bootstrap JS y Popper.js -->
@@ -139,6 +143,11 @@
                 resultElement.classList.add('text-danger');
                 resultElement.classList.remove('text-success');
             }
+        });
+
+        document.getElementById('siguiente').addEventListener('click', function() {
+            event.preventDefault();
+            window.location.href = 'math_serieengrilla.html?name=' + encodeURIComponent(name);
         });
     </script>
 
